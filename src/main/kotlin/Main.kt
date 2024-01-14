@@ -3,22 +3,24 @@ package top.bilitianx
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
+import kotlinx.serialization.json.encodeToStream
 import org.apache.logging.log4j.LogManager
 import org.apache.poi.xwpf.usermodel.XWPFDocument
 import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.nio.file.FileAlreadyExistsException
 import java.nio.file.Paths
 import kotlin.io.path.createDirectory
 import kotlin.io.path.exists
 import kotlin.io.path.outputStream
 
-const val TEMPLATE_DOCUMENT_PATH = """C:\Users\TianX\Documents\Novel\TEMPLATE.docx"""
+const val TEMPLATE_DOCUMENT_PATH = "TEMPLATE.docx"
 
 @OptIn(ExperimentalSerializationApi::class)
-fun main() {
+fun getDocx(filename: String) {
     val logger = LogManager.getLogger("main")
 
-    val novel = Json.decodeFromStream<Novel>(FileInputStream("novels/novel2.json"))
+    val novel = Json.decodeFromStream<Novel>(FileInputStream(filename))
     logger.info("Load: 《${novel.name}》")
 
     val novelPath = Paths.get("novels", novel.name.toValidPath())
@@ -38,7 +40,7 @@ fun main() {
         }
         logger.info("volumePath: $volumePath")
 
-        val document = XWPFDocument(FileInputStream(TEMPLATE_DOCUMENT_PATH))
+        val document = XWPFDocument(ClassLoader.getSystemResourceAsStream(TEMPLATE_DOCUMENT_PATH))
         with(document) {
             addHeading1(volume.name)
 
@@ -56,4 +58,15 @@ fun main() {
     }
 
     Browser.exit()
+}
+
+@OptIn(ExperimentalSerializationApi::class)
+fun getJson(id: Int, filename: String) {
+    Json.encodeToStream(crawlCatalog(8), FileOutputStream(filename))
+    Browser.exit()
+}
+
+fun main() {
+//    getJson(8, "novels/novel.json")
+//    getDocx("novels/novel.json")
 }

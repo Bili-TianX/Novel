@@ -37,5 +37,8 @@ object Browser {
 fun WebElement.getElementText(xpath: String): String =
     findElement(By.xpath(xpath)).text
 
+fun WebElement.getElements(xpath: String): List<WebElement> =
+    findElements(By.xpath(xpath))
+
 fun WebElement.getElementAttribute(xpath: String, attr: String): String =
     findElement(By.xpath(xpath)).getAttribute(attr)

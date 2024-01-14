@@ -23,11 +23,14 @@ repositories {
 }
 
 dependencies {
+//  Selenium
     implementation("org.seleniumhq.selenium:selenium-java:+")
+//  JSON
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:+")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:+")
+//  POI
     implementation("org.apache.poi:poi:+")
     implementation("org.apache.poi:poi-ooxml:+")
+//  Logging
     implementation("org.apache.logging.log4j:log4j-api:+")
     implementation("org.apache.logging.log4j:log4j-core:+")
 }
