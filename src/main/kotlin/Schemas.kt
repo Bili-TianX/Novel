@@ -8,7 +8,7 @@ data class Chapter(val name: String, val url: String) {
 }
 
 @Serializable
-data class Volume(val name: String, val chapters: List<Chapter>)
+data class Volume(val name: String, val chapters: MutableList<Chapter>)
 
 @Serializable
 data class Novel(val id: Int, val name: String, val volumes: List<Volume>)

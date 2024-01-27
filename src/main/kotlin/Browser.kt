@@ -1,14 +1,22 @@
 package top.bilitianx
 
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import org.apache.logging.log4j.LogManager
 import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
-import org.openqa.selenium.edge.EdgeDriver
+import org.openqa.selenium.chrome.ChromeDriver
+import java.nio.file.Files
+import kotlin.io.path.Path
+import kotlin.io.path.absolute
+
+val temporaryHtmlPath = Path("temp.html")
 
 object Browser {
     private val logger = LogManager.getLogger(Browser.javaClass)
 
-    private var driver = EdgeDriver()
+    private val driver = ChromeDriver()
+    private val httpClient = OkHttpClient()
 
     val paragraphs: List<String>
         get() = driver.findElements(By.xpath("//p"))
@@ -16,9 +24,27 @@ object Browser {
             .filterNot(String::isNullOrBlank)
             .toList()
 
-    fun get(url: String) {
+    fun get(url: String, local: Boolean = false) {
         logger.info("Get: $url")
-        driver.get(url)
+        if (local) {
+            val request = Request.Builder()
+                .addHeader(
+                    "accept-language",
+                    "zh-CN"
+                )
+                .url(url)
+                .build()
+
+            httpClient.newCall(request).execute().use {
+                Files.writeString(temporaryHtmlPath, it.body!!.string())
+
+                driver.get("file:///${temporaryHtmlPath.absolute()}")
+
+                Files.delete(temporaryHtmlPath)
+            }
+        } else {
+            driver.get(url)
+        }
     }
 
     private fun getElement(xpath: String): WebElement =

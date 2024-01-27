@@ -9,6 +9,7 @@ plugins {
     idea
     kotlin("jvm") version "1.+"
     kotlin("plugin.serialization") version "1.+"
+
 }
 
 idea {
@@ -23,8 +24,12 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:+")
 //  Selenium
     implementation("org.seleniumhq.selenium:selenium-java:+")
+//  HttpClient
+    implementation("org.apache.httpcomponents.client5:httpclient5-fluent:5.+")
+    implementation("com.squareup.okhttp3:okhttp:4.+")
 //  JSON
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:+")
 //  POI

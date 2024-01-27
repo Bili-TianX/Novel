@@ -23,6 +23,11 @@ fun getDocx(filename: String) {
     val novel = Json.decodeFromStream<Novel>(FileInputStream(filename))
     logger.info("Load: 《${novel.name}》")
 
+    if (!novel.volumes.all { it.chapters.map { it.urlTemplate }.toSet().size == it.chapters.size }) {
+        logger.error("error")
+        return
+    }
+
     val novelPath = Paths.get("novels", novel.name.toValidPath())
         .also {
             try {
@@ -62,11 +67,12 @@ fun getDocx(filename: String) {
 
 @OptIn(ExperimentalSerializationApi::class)
 fun getJson(id: Int, filename: String) {
-    Json.encodeToStream(crawlCatalog(8), FileOutputStream(filename))
+    Json.encodeToStream(crawlCatalog(id), FileOutputStream(filename))
     Browser.exit()
+
 }
 
 fun main() {
-//    getJson(8, "novels/novel.json")
-//    getDocx("novels/novel.json")
+//    getJson(2428, "novels/剃须.json")
+    getDocx("novels/后.json")
 }
