@@ -75,6 +75,8 @@ fun crawlChapter(chapter: Chapter): List<String> {
 
         while (hasNext) {
             Browser.get(chapter.urlTemplate.format(i++), local = true)
+            Browser.scroll()
+            rest()
 
             with(Browser.paragraphs) {
                 if (isEmpty()) {
@@ -85,8 +87,6 @@ fun crawlChapter(chapter: Chapter): List<String> {
                     addAll(this)
                 }
             }
-
-            rest()
         }
 
         return this

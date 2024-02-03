@@ -15,6 +15,7 @@ import kotlin.io.path.exists
 import kotlin.io.path.outputStream
 
 const val TEMPLATE_DOCUMENT_PATH = "TEMPLATE.docx"
+val PREFIX = " ".repeat(4)
 
 @OptIn(ExperimentalSerializationApi::class)
 fun getDocx(filename: String) {
@@ -23,7 +24,9 @@ fun getDocx(filename: String) {
     val novel = Json.decodeFromStream<Novel>(FileInputStream(filename))
     logger.info("Load: 《${novel.name}》")
 
-    if (!novel.volumes.all { it.chapters.map { it.urlTemplate }.toSet().size == it.chapters.size }) {
+    if (!novel.volumes.all {
+            it.chapters.map { it.urlTemplate }.toSet().size == it.chapters.size
+        }) {
         logger.error("error")
         return
     }
@@ -45,13 +48,17 @@ fun getDocx(filename: String) {
         }
         logger.info("volumePath: $volumePath")
 
-        val document = XWPFDocument(ClassLoader.getSystemResourceAsStream(TEMPLATE_DOCUMENT_PATH))
+        val document = XWPFDocument(
+            ClassLoader.getSystemResourceAsStream(TEMPLATE_DOCUMENT_PATH)
+        )
         with(document) {
             addHeading1(volume.name)
 
             for (chapter in volume.chapters) {
                 addHeading2(chapter.name)
-                crawlChapter(chapter).map { s -> "    $s" }.forEach(::addText)
+                crawlChapter(chapter)
+                    .map { s -> PREFIX + s }
+                    .forEach(::addText)
             }
 
             logger.info("write: $volumePath")
@@ -74,5 +81,5 @@ fun getJson(id: Int, filename: String) {
 
 fun main() {
 //    getJson(2428, "novels/剃须.json")
-    getDocx("novels/后.json")
+    getDocx("novels/sample.json")
 }

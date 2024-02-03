@@ -1,11 +1,13 @@
 package top.bilitianx
 
+import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.apache.logging.log4j.LogManager
 import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.edge.EdgeDriver
 import java.nio.file.Files
 import kotlin.io.path.Path
 import kotlin.io.path.absolute
@@ -40,7 +42,7 @@ object Browser {
 
                 driver.get("file:///${temporaryHtmlPath.absolute()}")
 
-                Files.delete(temporaryHtmlPath)
+//                Files.delete(temporaryHtmlPath)
             }
         } else {
             driver.get(url)
@@ -49,6 +51,10 @@ object Browser {
 
     private fun getElement(xpath: String): WebElement =
         driver.findElement(By.xpath(xpath))
+
+    fun scroll() {
+        driver.executeScript("window.scrollTo(0, document.body.scrollHeight);")
+    }
 
     fun getElementText(xpath: String): String =
         getElement(xpath).text
