@@ -10,7 +10,11 @@ Kotlin
 
 ## 使用的库
 
-Selenium，JSoup，Kotlin Serialization，Log4j，Apache POI
+- Selenium
+- JSoup
+- Kotlin Serialization
+- Log4j
+- Apache POI
 
 ## 使用方式
 
