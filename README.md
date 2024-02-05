@@ -10,23 +10,23 @@ Kotlin
 
 ## 使用的库
 
-Selenium，Log4j，Apache POI
+Selenium，JSoup，Kotlin Serialization，Log4j，Apache POI
 
 ## 使用方式
 
-1. 获取小说的各卷、章节的信息
+1. 获取小说信息
 
 ```kotlin
-// in Main.kt
-fun getJson(id: Int, filename: String)
+// top.bilitianx.network.PersistKt
+fun persistJSON(id: Int, filename: String)
 ```
 
-- id: 小说的id
-- filename: 保存的路径
+- `id`：小说的ID
+- `filename`：JSON保存的路径
 
-运行结果：
+> **温馨提示：有的章节url为“javascript:cid()”，需手动修改**
 
-(**温馨提示：有的章节url为“javascript:cid(0)”，需手动修改**)
+运行结果示例：
 
 ```json5
 {
@@ -52,8 +52,8 @@ fun getJson(id: Int, filename: String)
 2. 爬取为Word文档
 
 ```kotlin
-// in Main.kt
-fun getDocx(filename: String)
+// top.bilitianx.network.PersistKt
+fun persistMSWord(filename: String)
 ```
 
-- filename: 上面保存的Json路径
+- `filename`：小说的JSON路径
