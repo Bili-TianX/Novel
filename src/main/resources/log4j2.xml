@@ -2,16 +2,16 @@
 <Configuration status="WARN">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="[%d{HH:mm:ss.SSS}][%logger][%-5level] %msg%n" />
+            <PatternLayout pattern="[%d{HH:mm:ss.SSS}][%logger][%level] %msg%n" />
         </Console>
 
         <File name="File" fileName="logs/application.log">
-            <PatternLayout pattern="[%d{HH:mm:ss.SSS}][%logger][%-5level] %msg%n" />
+            <PatternLayout pattern="[%d{HH:mm:ss.SSS}][%logger][%level] %msg%n" />
         </File>
     </Appenders>
 
     <Loggers>
-        <Root level="WARN">
+        <Root level="INFO">
             <AppenderRef ref="Console" />
             <AppenderRef ref="File" />
         </Root>

@@ -2,6 +2,8 @@
 
 小说爬虫
 
+![效果](docx.png)
+
 ## 使用的语言
 
 Kotlin
@@ -55,7 +57,3 @@ fun getDocx(filename: String)
 ```
 
 - filename: 上面保存的Json路径
-
-运行结果:
-
-![运行结果](docx.png)
