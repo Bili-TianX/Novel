@@ -12,15 +12,18 @@ import kotlin.io.path.*
 
 private const val ROOT_NOVEL_FOLDER = "novels"
 private const val TEMPLATE_MS_WORD_PATH = "TEMPLATE.docx"
-private val PARAGRAPH_PREFIX = " ".repeat(4)
+private const val PARAGRAPH_PREFIX = "    "
 
 @Suppress("JSON_FORMAT_REDUNDANT")
 @OptIn(ExperimentalSerializationApi::class)
-fun persistJSON(id: Int, filename: String) =
+fun persistJSON(id: Int, filename: String? = null) = crawlCatalog(id).run {
+    val path = if (filename == null) Path(ROOT_NOVEL_FOLDER, "$name.json") else Path(filename)
     Json { prettyPrint = true }.encodeToStream(
-        crawlCatalog(id),
-        Path(filename).outputStream()
+        this,
+        (path).outputStream()
     )
+    path
+}
 
 @OptIn(ExperimentalSerializationApi::class)
 fun persistMSWord(filename: String) {

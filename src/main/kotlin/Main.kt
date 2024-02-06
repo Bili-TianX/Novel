@@ -3,8 +3,6 @@ package top.bilitianx
 import top.bilitianx.network.*
 
 fun main() = Browser.use {
-    val filename = "novels/后藤.json"
-
-//    persistJSON(3642, filename)
-    persistMSWord(filename)
+//    val path = persistJSON(2356)
+    persistMSWord("""C:\Users\TianX\Documents\Code\Java\Novel\novels\魔女之旅.json""")
 }
